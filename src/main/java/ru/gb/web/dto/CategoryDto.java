@@ -3,6 +3,8 @@ package ru.gb.web.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,4 +16,6 @@ public class CategoryDto {
     private Long categoryId;
 
     private String title;
+
+    private List<ProductDto> products;
 }
