@@ -15,9 +15,9 @@ import java.util.NoSuchElementException;
 @Mapper(uses = ProductMapper.class)
 public interface CategoryMapper {
     @Mapping(source = "categoryId", target = "id")
-    Category toCategory(CategoryDto categoryDto);
+    Category toCategory(CategoryDto categoryDto,  @Context ManufacturerDao manufacturerDao);
 
     @Mapping(source = "id", target = "categoryId")
-    CategoryDto toCategoryDto(Category category);
+    CategoryDto toCategoryDto(Category category,  @Context ManufacturerDao manufacturerDao);
 
 }

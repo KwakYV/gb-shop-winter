@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.gb.dao.CategoryDao;
+import ru.gb.dao.ManufacturerDao;
 import ru.gb.entity.Category;
 import ru.gb.web.dto.CategoryDto;
 import ru.gb.web.dto.mapper.CategoryMapper;
@@ -21,30 +22,31 @@ public class CategoryService {
 
     private final CategoryDao categoryDao;
     private final CategoryMapper categoryMapper;
+    private final ManufacturerDao manufacturerDao;
 
     @Transactional
     public CategoryDto save(final CategoryDto categoryDto) {
-        Category category = categoryMapper.toCategory(categoryDto);
+        Category category = categoryMapper.toCategory(categoryDto, manufacturerDao);
         if (category.getId() != null) {
             categoryDao.findById(category.getId()).ifPresent(
                     (c) -> category.setVersion(c.getVersion())
             );
         }
-        return categoryMapper.toCategoryDto(categoryDao.save(category));
+        return categoryMapper.toCategoryDto(categoryDao.save(category), manufacturerDao);
     }
 
     @Transactional(readOnly = true)
     public CategoryDto findById(Long id) {
-        return categoryMapper.toCategoryDto(categoryDao.findById(id).orElse(null));
+        return categoryMapper.toCategoryDto(categoryDao.findById(id).orElse(null), manufacturerDao);
     }
 
     @Transactional(readOnly = true)
     public CategoryDto findByTitle(String title) {
-        return categoryMapper.toCategoryDto(categoryDao.findByTitle(title).orElse(null));
+        return categoryMapper.toCategoryDto(categoryDao.findByTitle(title).orElse(null), manufacturerDao);
     }
 
     public List<CategoryDto> findAll() {
-        return categoryDao.findAll().stream().map(categoryMapper::toCategoryDto).collect(Collectors.toList());
+        return categoryDao.findAll().stream().map(v -> categoryMapper.toCategoryDto(v, manufacturerDao)).collect(Collectors.toList());
     }
 
     public void deleteById(Long id) {

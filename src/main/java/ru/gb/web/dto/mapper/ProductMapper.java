@@ -11,7 +11,7 @@ import ru.gb.web.dto.ProductManufacturerDto;
 
 import java.util.NoSuchElementException;
 
-@Mapper(uses = {ManufacturerMapper.class, CategoryMapper.class})
+@Mapper(uses = {ManufacturerMapper.class})
 public interface ProductMapper {
     Product toProduct(ProductDto productDto, @Context ManufacturerDao manufacturerDao);
 
