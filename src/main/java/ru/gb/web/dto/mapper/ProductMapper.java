@@ -30,12 +30,12 @@ public interface ProductMapper {
         return manufacturer.getName();
     }
 
-//    default Category getCategory(String category, @Context CategoryDao categoryDao) {
-//        return categoryDao.findByTitle(category).orElseThrow(NoSuchElementException::new);
-//    }
-//
-//    default String getCategory(Category category) {
-//        return category.getTitle();
-//    }
+    default Category getCategory(String category, @Context CategoryDao categoryDao) {
+        return categoryDao.findByTitle(category).orElseThrow(NoSuchElementException::new);
+    }
+
+    default String getCategory(Category category) {
+        return category.getTitle();
+    }
 
 }

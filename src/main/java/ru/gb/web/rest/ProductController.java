@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.api.product.dto.ProductDto;
+import ru.gb.exceptions.ProductException;
 import ru.gb.service.ProductService;
 import ru.gb.web.dto.ProductManufacturerDto;
 
@@ -44,16 +45,30 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> handlePost(@Validated @RequestBody ProductDto productDto) {
-        ProductDto savedProduct = productService.save(productDto);
+        ProductDto savedProduct = null;
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(URI.create("/api/v1/product/" + savedProduct.getId()));
+        try {
+            savedProduct = productService.save(productDto);
+            httpHeaders.setLocation(URI.create("/api/v1/product/" + savedProduct.getId()));
+        } catch (ProductException pe) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
 
     @PutMapping("/{productId}")
     public ResponseEntity<?> handleUpdate(@PathVariable("productId") Long id, @Validated @RequestBody ProductDto productDto) {
         productDto.setId(id);
-        productService.save(productDto);
+        try {
+            productService.save(productDto);
+        } catch (ProductException pe) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
