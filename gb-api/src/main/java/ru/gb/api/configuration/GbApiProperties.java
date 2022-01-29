@@ -15,6 +15,7 @@ public class GbApiProperties {
     @Getter
     @Setter
     public static class Endpoint {
+        private String baseUri;
         private String manufacturerUrl;
     }
 

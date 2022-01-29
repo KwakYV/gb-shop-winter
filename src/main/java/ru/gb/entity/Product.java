@@ -33,7 +33,7 @@ public class Product extends InfoEntity {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
