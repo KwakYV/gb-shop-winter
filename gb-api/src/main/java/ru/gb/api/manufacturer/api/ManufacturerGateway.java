@@ -1,17 +1,19 @@
 package ru.gb.api.manufacturer.api;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.api.base.BaseGateway;
 import ru.gb.api.manufacturer.dto.ManufacturerDto;
 
 import java.util.List;
 
 @FeignClient(url = "http://127.0.0.1:8080/internal/api/v1/manufacturer", name = "ManufacturerGateway")
-public interface ManufacturerGateway {
+public interface ManufacturerGateway extends BaseGateway {
 
     @GetMapping
     List<ManufacturerDto> getManufacturerList();
