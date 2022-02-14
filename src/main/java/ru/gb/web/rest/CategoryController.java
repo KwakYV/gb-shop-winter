@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.api.category.dto.CategoryDto;
+import ru.gb.entity.Category;
 import ru.gb.service.CategoryService;
 
 import java.util.List;
@@ -32,6 +33,12 @@ public class CategoryController {
             }
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/title/{title}")
+    public ResponseEntity<?> getCategoryByTitle(@PathVariable("title") String title){
+        CategoryDto categoryDto = categoryService.findByTitle(title);
+        return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 
     @PostMapping

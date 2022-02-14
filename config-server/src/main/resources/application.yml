@@ -5,11 +5,11 @@ spring:
     config:
       server:
         git:
-          uri: ${GIT_URI:/Users/artemkropotov/java_projects/geekbrains/gb-setting}
+          uri: ${GIT_URI:/Users/kvak/repos/gb-settings}
           clone-on-start: true
           username: ${GIT_USERNAME:geek}
           password: ${GIT_PASSWORD:geek}
-        default-label: master
+        default-label: develop
   security:
     user:
       name: ${SECURITY_USER:geek_user}
