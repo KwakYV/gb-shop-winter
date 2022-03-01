@@ -13,7 +13,7 @@
 <body>
 
 <div th:replace="~{common/navbar :: navi(ProductForm)}" />
-
+<hr/>
 <div class="container">
 <form class="form-horizontal" th:action="@{/product}" th:object="${product}" method="post">
     <input type="hidden" th:field="*{id}">
@@ -49,8 +49,29 @@
 
     </div>
 
-<!--    todo добавить сюда список категорий с множественным выбором-->
-<!--    todo добавить сюда список производителей с единственно возможным выбором-->
+    <div class="col-md-8">
+        <label>
+            Categories:
+            <input type="checkbox"
+                   name="categories"
+                   th:each="category: ${categoryList}"
+                   th:text="${category.title}"
+                   th:value="${category}"
+                   th:field="*{categories}"
+            />
+        </label>
+    </div>
+
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <select class="form-select" aria-label="Default select example" th:field="*{manufacturer}">
+                <option th:each="manufacturer : ${manufacturers}"
+                        th:value="${manufacturer.manufacturerId}"
+                        th:text="${manufacturer.name}"></option>
+            </select>
+        </div>
+    </div>
+
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Сохранить</button>
     </div>

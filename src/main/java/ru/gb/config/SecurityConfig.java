@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests((requests) -> {
             ((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)requests.anyRequest()).authenticated();
         });
-        http.exceptionHandling().accessDeniedPage("/access-denied");
+        http.exceptionHandling().accessDeniedPage("/errors/access-denied");
         http.formLogin();
         http.httpBasic();
     }
