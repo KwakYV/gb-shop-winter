@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             ((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl) requests.anyRequest()).authenticated();
         });
         http.exceptionHandling().accessDeniedPage("/errors/access-denied");
+<<<<<<< HEAD
         http.formLogin()
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/auth/login")
@@ -43,6 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout()
                 .logoutSuccessUrl("/product/all")
                 .permitAll();
+=======
+        http.formLogin();
+>>>>>>> lesson10
         http.httpBasic();
     }
 
