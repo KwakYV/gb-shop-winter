@@ -49,7 +49,7 @@ public class JpaUserDetailService implements UserDetailsService, UserService {
 
         accountUser.setRoles(Set.of(accountRole));
         accountUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        accountUser.setStatus(AccountStatus.ACTIVE);
+        accountUser.setStatus(AccountStatus.NOT_ACTIVE);
 
         AccountUser registeredAccountUser = accountUserDao.save(accountUser);
 
@@ -89,5 +89,12 @@ public class JpaUserDetailService implements UserDetailsService, UserService {
     @Override
     public void deleteById(Long id) {
         accountUserDao.deleteById(id);
+    }
+
+    @Override
+    public UserDto confirm(AccountUser accountUser) {
+        accountUser.setStatus(AccountStatus.ACTIVE);
+        accountUser.setEnabled(true);
+        return userMapper.toUserDto(accountUserDao.save(accountUser));
     }
 }

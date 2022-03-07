@@ -46,6 +46,9 @@ public class AccountUser implements UserDetails {
     @Transient
     private Set<Authority> authorities;
 
+    @Column(name = "secret")
+    private String secret;
+
     @Override
     public Set<GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = this.roles.stream()
@@ -67,6 +70,6 @@ public class AccountUser implements UserDetails {
     @Builder.Default
     private boolean credentialsNonExpired = true;
     @Builder.Default
-    private boolean enabled = true;
+    private boolean enabled = false;
 
 }
