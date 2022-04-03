@@ -28,10 +28,6 @@ public class ProductController {
 
     private ServiceFactory serviceFactory;
 
-//    private final ProductService productService;
-//    private final ManufacturerService manufacturerService;
-//    private final CategoryService categoryService;
-//    private final ProductImageService productImageService;
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('product.read') || isAnonymous()")
