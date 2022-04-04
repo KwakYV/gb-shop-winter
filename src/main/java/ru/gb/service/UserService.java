@@ -18,4 +18,6 @@ public interface UserService {
     AccountUser findByUsername(String username);
 
     void deleteById(Long id);
+
+    UserDto confirm(AccountUser accountUser);
 }

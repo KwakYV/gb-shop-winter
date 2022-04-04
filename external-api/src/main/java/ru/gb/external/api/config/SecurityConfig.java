@@ -33,14 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     requests.antMatchers(HttpMethod.POST, USER_ENDPOINT).permitAll();
                     requests.antMatchers(USER_ENDPOINT).hasRole("ADMIN");
                     requests.anyRequest().authenticated();
-//                    requests.antMatchers(HttpMethod.POST,"/product").hasRole("ADMIN");
-//                    requests.mvcMatchers(HttpMethod.GET,"/product/{productId}").permitAll();
                 }
         );
-//        http.authorizeRequests((requests) -> {
-//            ((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)requests.anyRequest()).authenticated();
-//        });
-//        http.exceptionHandling().accessDeniedPage("/access-denied");
+
 
         http.apply(jwtConfig);
         http.httpBasic().disable();
