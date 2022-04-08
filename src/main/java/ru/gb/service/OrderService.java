@@ -14,6 +14,8 @@ import ru.gb.dao.CategoryDao;
 import ru.gb.dao.ManufacturerDao;
 import ru.gb.dao.OrderDao;
 import ru.gb.entity.Order;
+import ru.gb.service.observers.order.JmsOrderObserver;
+import ru.gb.service.observers.order.OrderObserverPool;
 import ru.gb.web.dto.mapper.OrderMapper;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final CategoryDao categoryDao;
     private final ManufacturerDao manufacturerDao;
-    private final JmsTemplate jmsTemplate;
+    private final OrderObserverPool orderObserverPool;
 
     @Transactional
     public OrderDto save(final OrderDto orderDto) {
@@ -41,7 +43,8 @@ public class OrderService {
             order.setStatus(OrderStatus.CREATED);
         }
         OrderDto savedOrderDto = orderMapper.toOrderDto(orderDao.save(order));
-        jmsTemplate.convertAndSend(JmsConfig.ORDER_CHANGED, new OrderEvent(savedOrderDto));
+        orderObserverPool.register();
+        orderObserverPool.notify(savedOrderDto);
         return savedOrderDto;
     }
 
